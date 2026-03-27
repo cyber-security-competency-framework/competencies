@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [production]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Build lib
+        working-directory: lib
+        run: yarn install && yarn build
+
+      - name: Build app
+        working-directory: app
+        run: yarn install && NODE_OPTIONS=--openssl-legacy-provider yarn webpack --mode production
+
+      - name: Prepare deploy directory
+        run: |
+          mkdir -p deploy/dist
+          mkdir -p deploy/images
+          mkdir -p deploy/src
+          cp app/index.html deploy/
+          cp app/dist/bundle.js deploy/dist/
+          cp -r app/images/. deploy/images/ 2>/dev/null || true
+          cp app/src/README.app.md deploy/src/ 2>/dev/null || true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          external_repository: cyber-security-competencies-framework/cyber-security-competencies-framework.github.io
+          publish_branch: main
+          publish_dir: ./deploy
