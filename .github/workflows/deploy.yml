@@ -35,13 +35,13 @@ jobs:
           mkdir -p deploy/src
           cp app/index.html deploy/
           cp app/dist/bundle.js deploy/dist/
-          cp -r app/images/. deploy/images/ 2>/dev/null || true
-          cp app/src/README.app.md deploy/src/ 2>/dev/null || true
+          cp -r app/images/. deploy/images/
+          cp app/src/COMPETENCIES.md deploy/src/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.DEPLOY_TOKEN }}
-          external_repository: cyber-security-competencies-framework/cyber-security-competencies-framework.github.io
+          external_repository: cyber-security-competency-framework/cyber-security-competency-framework.github.io
           publish_branch: main
           publish_dir: ./deploy
