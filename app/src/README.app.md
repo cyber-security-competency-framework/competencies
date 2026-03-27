@@ -21,6 +21,9 @@ We reviewed a number of related work into defining skills and competencies:
 - [JISC Digital Capability](https://digitalcapability.jisc.ac.uk/what-is-digital-capability/)
 - [Civil Service Competency Framework](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/436073/cscf_fulla4potrait_2013-2017_v2d.pdf)
 
+## The Framework
+
+### Proficiency
 The compentencies are broken down into five proficiency levels:
 
 1. Novice
@@ -29,11 +32,24 @@ The compentencies are broken down into five proficiency levels:
 4. Proficient
 5. Expert
 
-Jump to competencies:
+### Competencies:
 
-- [Security Monitoring](#security-monitoring)
-- [Issue & Incident Response](#incident-response)
-- [Threat & Internal Context] (#threat-context)
-- [Product Security](#product-security)
-- [Senior Software Engineer](#senior-software-engineer)
-- [Staff Software Engineer](#staff-software-engineer)
+#### Cyber Resilience
+**Detect, respond to, and learn from issues and incidents and anticipate attacks.**
+- Security Monitoring
+- Incident & Issue Response
+- Threat and Internal Context
+
+#### System Hardening
+**System level building and testing to prevent, find, and fix exploitable weaknesses and to make attacks less likely, less impactful and more recoverable.**
+- System & Application Security
+- Security Architecture
+- Identity and Access
+- Data Security
+
+#### Secure the Organisation
+**Security at scale, implementing control loops, process improvements and amplifying individual contribution with workflows and automation, ensuring that the organisation is not only secure but also adaptable, efficient and resilient.**
+- Governance, Risk and Compliance
+- Security in Contracts
+- Security Process Engineering
+- Organisational Resilience
