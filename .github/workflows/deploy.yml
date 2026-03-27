@@ -22,7 +22,7 @@ jobs:
 
       - name: Build lib
         working-directory: lib
-        run: yarn install && yarn build
+        run: yarn install && npx tsc -p tsconfig.json && yarn webpack
 
       - name: Build app
         working-directory: app

@@ -22,7 +22,7 @@
   "scripts": {
     "clean": "rm -rf ./dist && rm -rf ./typings",
     "build": "yarn build:tsc && yarn build:webpack",
-    "build:webpack": "webpack",
+    "build:webpack": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "build:tsc": "tsc -p tsconfig.json",
     "test": "npx jest -- -t .test.ts",
     "prepack": "yarn clean && yarn build"
