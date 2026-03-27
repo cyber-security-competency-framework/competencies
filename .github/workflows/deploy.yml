@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
           external_repository: cyber-security-competency-framework/cyber-security-competency-framework.github.io
           publish_branch: main
           publish_dir: ./deploy
