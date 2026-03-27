@@ -42,7 +42,12 @@ module.exports = {
 
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-    symlinks: true
+    symlinks: true,
+    alias: {
+      'react': path.resolve(__dirname, 'node_modules/react'),
+      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
+      'react-redux': path.resolve(__dirname, 'node_modules/react-redux'),
+    }
   },
 
   plugins: [],
