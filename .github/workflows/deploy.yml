@@ -26,7 +26,7 @@ jobs:
 
       - name: Build app
         working-directory: app
-        run: yarn install && node --openssl-legacy-provider node_modules/.bin/webpack --mode production
+        run: yarn install && yarn webpack --mode production
 
       - name: Prepare deploy directory
         run: |
