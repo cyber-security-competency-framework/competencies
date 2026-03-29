@@ -2,9 +2,11 @@ import { loadFile as lf } from '@toolkip/server';
 import { parseFile } from './parseFile';
 
 const ALLOWED_EXTENSION = /\.md$/i;
+const MAX_FILE_SIZE = 500_000; // ~500KB in characters
 const DANGEROUS_PROTOCOLS = /^(javascript|data|file|vbscript):/i;
 const BLOB_URL = /^blob:/i;
 const NULL_BYTE = /\0/;
+const LOOPBACK = /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])/i;
 
 const validateFilename = (filename: string): void => {
   if (!filename || typeof filename !== 'string') {
@@ -21,6 +23,9 @@ const validateFilename = (filename: string): void => {
   if (BLOB_URL.test(filename.trim())) {
     return;
   }
+  if (LOOPBACK.test(filename.trim())) {
+    throw new Error('Invalid URL: requests to loopback addresses are not permitted');
+  }
   if (!ALLOWED_EXTENSION.test(filename)) {
     throw new Error('Invalid filename: only .md files are permitted');
   }
@@ -28,12 +33,15 @@ const validateFilename = (filename: string): void => {
 
 export const loadFile = async (filename: string) => {
   validateFilename(filename);
-  return await lf({ filename });
+  const content = await lf({ filename });
+  if (content.length > MAX_FILE_SIZE) {
+    throw new Error(`File too large: maximum size is ${MAX_FILE_SIZE / 1000}KB`);
+  }
+  return content;
 };
 
 export const loadAndParseFile = async (filename: string) => {
-  validateFilename(filename);
-  const loaded = await lf({ filename })
-  const parsed = parseFile(loaded)
-  return parsed
+  const loaded = await loadFile(filename);
+  const parsed = parseFile(loaded);
+  return parsed;
 }

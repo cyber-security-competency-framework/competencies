@@ -9,10 +9,13 @@ type ParseLineProps = {
   lastColumn: string;
 };
 
+const MAX_LINES = 10_000;
+
 export const parseFile = (
   fileContents: string
 ): ParseLineState => {
-  const lines = getLinesInFile(fileContents);
+  const allLines = getLinesInFile(fileContents);
+  const lines = allLines.length > MAX_LINES ? allLines.slice(0, MAX_LINES) : allLines;
 
   const props: ParseLineProps = {
     state: {

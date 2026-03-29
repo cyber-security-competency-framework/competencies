@@ -1,6 +1,7 @@
 
 export type LevenshteinDiffType = 'ø' | 's' | 'd' | 'a'
 const MAX_STRING = 50;
+const MAX_TOKENS = 200;
 
 export const similarityScore = (strA: string, strB: string) => {
     if (strA === strB) { 
@@ -35,23 +36,26 @@ export const similarityScore = (strA: string, strB: string) => {
  * to the 
  */
 export const levenshteinDistance = (strA: string[], strB: string[]) => {
-    if (!strA || !strB) { 
-        return { 
+    if (!strA || !strB) {
+        return {
             distance: Math.max(strA.length, strB.length),
             differences: [] // TODO: fill out
-        }; 
+        };
     }
+
+    const boundedA = strA.length > MAX_TOKENS ? strA.slice(0, MAX_TOKENS) : strA;
+    const boundedB = strB.length > MAX_TOKENS ? strB.slice(0, MAX_TOKENS) : strB;
 
     const matrix: number[][] = [];
 
-    for (let aIdx = 0; aIdx < strA.length; aIdx += 1) {
+    for (let aIdx = 0; aIdx < boundedA.length; aIdx += 1) {
 
         // initialize the sub array
         matrix[aIdx] = [];
 
-        for (let bIdx = 0; bIdx < strB.length; bIdx += 1) {
+        for (let bIdx = 0; bIdx < boundedB.length; bIdx += 1) {
 
-            const myDiff = calculateLetterDiff(strA[aIdx], strB[bIdx]);
+            const myDiff = calculateLetterDiff(boundedA[aIdx], boundedB[bIdx]);
             const minPastDiff = calculateMinPastDiff(aIdx, bIdx, matrix);
 
             matrix[aIdx][bIdx] = (myDiff + minPastDiff);
@@ -59,10 +63,10 @@ export const levenshteinDistance = (strA: string[], strB: string[]) => {
     }
 
     // generate the differences by traversing the matrix backwards
-    const differences = findDifferences(matrix, [strA.length - 1, strB.length - 1]); 
+    const differences = findDifferences(matrix, [boundedA.length - 1, boundedB.length - 1]);
 
     return {
-        distance: matrix[strA.length - 1][strB.length - 1],
+        distance: matrix[boundedA.length - 1][boundedB.length - 1],
         differences
     }
 
