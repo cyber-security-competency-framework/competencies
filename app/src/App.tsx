@@ -1,6 +1,5 @@
 import React from 'react';
 import { MarkdownToMatrix } from 'react-markdown-to-matrix';
-// import { Wrapper } from './Wrapper';
 
 export const App: React.FC = () => {
     return(

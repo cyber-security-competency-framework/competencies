@@ -31,7 +31,7 @@ export const selectSimilarOriginRows = (state: State, competencyId: ElementId, c
 
     const out = [];
     for (let s of similarities) {
-        if (!s.similarElement || !s.similarElement.originRow) { return; }
+        if (!s.similarElement || !s.similarElement.originRow) { continue; }
         if (s.similarElement.originRow !== currentRow) {
             out.push(s.similarElement.originRow);
         }
@@ -40,11 +40,3 @@ export const selectSimilarOriginRows = (state: State, competencyId: ElementId, c
     return out;
 }
 
-/**
- * selectSimilarityGraph
- * ----------------------------------------------------------------------------
- * find all of the similarities across all of the elements
- */
-export const selectSimilarityGraph = (state: State) => {
-    return state.similarityGraph;
-}

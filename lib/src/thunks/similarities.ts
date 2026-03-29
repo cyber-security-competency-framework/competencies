@@ -18,13 +18,13 @@ export const parseSimilarities = () => {
         const allElementKeys = Object.keys(elements);
 
         // load all of the similarities
-        const allPomises = []
+        const allPromises = []
         for (let e of allElementKeys) {
-            allPomises.push(wait(0).then(() => {
+            allPromises.push(wait(0).then(() => {
                 return findSimilarities(e, elements)
             }))
         }
-        const results = await Promise.all(allPomises);
+        const results = await Promise.all(allPromises);
 
         // loop through all of the found similarities and add the ones that are close enough
         const out: Record<ElementId, Similarity[]> = {};
